@@ -1,6 +1,7 @@
 package main
 
 import (
+	"benzeg/journeySlackbot/github"
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha1"
@@ -10,7 +11,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"journeysoftware/jaya/github"
 	"log"
 	"net/http"
 	"os"
@@ -19,7 +19,7 @@ import (
 
 const secret = "itsthejourney"
 
-type Delivery struct {
+type HookDelivery struct {
 	Signature string
 	Event     string
 	ID        string
@@ -47,8 +47,9 @@ func verifySignature(secret []byte, signature string, body []byte) bool {
 	return hmac.Equal(signBody(secret, body), actual)
 }
 
-func ParseDelivery(secret []byte, req *http.Request) (*Delivery, error) {
-	payload := Delivery{}
+func ParseHook(secret []byte, req *http.Request) (*HookDelivery, error) {
+
+	payload := HookDelivery{}
 	payload.Signature = req.Header.Get("X-Hub-Signature")
 	if len(payload.Signature) == 0 {
 		return nil, errors.New("no signature")
@@ -78,8 +79,31 @@ func ParseDelivery(secret []byte, req *http.Request) (*Delivery, error) {
 	return &payload, nil
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	hc, err := ParseDelivery([]byte(secret), r)
+type NudgeDelivery struct {
+	ActivityType string
+	Body         []byte
+}
+
+func ParseNudge(req *http.Request) (*NudgeDelivery, error) {
+	payload := NudgeDelivery{}
+	payload.ActivityType = req.Header.Get("Activity-Type")
+	if len(payload.ActivityType) == 0 {
+		return nil, errors.New("missing activity type")
+	}
+
+	body, err := ioutil.ReadAll(req.Body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	payload.Body = body
+
+	return &payload, nil
+}
+
+func hookHandler(w http.ResponseWriter, r *http.Request) {
+	hc, err := ParseHook([]byte(secret), r)
 	if r.Method != "POST" {
 		http.Error(w, http.StatusText(405), 405)
 		return
@@ -95,6 +119,25 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	postToSlack(message)
 	w.WriteHeader(http.StatusOK)
 	return
+}
+
+func nudgeHandler(w http.ResponseWriter, r *http.Request) {
+	hc, err := ParseNudge(r)
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(405), 405)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Printf("Failed processing nudge! ('%s')", err)
+		io.WriteString(w, "{}")
+		return
+	}
+	activityType := r.Header.Get("Activity-Type")
+	message := nudge[activityType](hc.body)
+	postToSlack(message)
+	w.WriteHeader(http.StatusOK)
 }
 
 func postToSlack(message string) {
@@ -121,7 +164,8 @@ func postToSlack(message string) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/hooks", hookHandler)
+	http.HandleFunc("/nudges", nudgeHandler)
 	port := os.Getenv("PORT")
 	// port := "8080"
 	if port == "" {
