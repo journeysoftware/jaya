@@ -1,7 +1,6 @@
 package main
 
 import (
-	"benzeg/journeySlackbot/github"
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha1"
@@ -11,6 +10,8 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"journeysoftware/jaya/github"
+	"journeysoftware/jaya/nudge"
 	"log"
 	"net/http"
 	"os"
@@ -134,8 +135,11 @@ func nudgeHandler(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "{}")
 		return
 	}
+	f := map[string]func(body []byte) string{
+		"IssuesDevstreamActivity": nudge.IssuesDevstreamActivity}
+
 	activityType := r.Header.Get("Activity-Type")
-	message := nudge[activityType](hc.body)
+	message := f[activityType](hc.Body)
 	postToSlack(message)
 	w.WriteHeader(http.StatusOK)
 }
