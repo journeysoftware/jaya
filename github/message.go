@@ -15,12 +15,12 @@ type IssuesPayload struct {
 		CommentsURL string `json:"comments_url"`
 		EventsURL   string `json:"events_url"`
 		HTMLURL     string `json:"html_url"`
-		ID          int64  `json:"id, string, omitempty"`
-		Number      int64  `json:"number, string, omitempty"`
+		ID          int64  `json:"id,string,omitempty"`
+		Number      int64  `json:"number,string,omitempty"`
 		Title       string `json:"title"`
 		User        struct {
 			Login             string `json:"login"`
-			ID                int64  `json:"id, string, omitempty"`
+			ID                int64  `json:"id,string,omitempty"`
 			AvatarURL         string `json:"avatar_url"`
 			GravatarID        string `json:"gravatar_id"`
 			URL               string `json:"url"`
@@ -35,32 +35,32 @@ type IssuesPayload struct {
 			EventsURL         string `json:"events_url"`
 			ReceivedeventsURL string `json:"received_events_url"`
 			Type              string `json:"type"`
-			Siteadmin         bool   `json:"site_admin, string, omitempty"`
+			Siteadmin         bool   `json:"site_admin,string,omitempty"`
 		}
 		Labels []struct {
-			ID      int64  `json:"id, string, omitempty"`
+			ID      int64  `json:"id,string,omitempty"`
 			URL     string `json:"url"`
 			Name    string `json:"name"`
 			Color   string `json:"color"`
-			Default bool   `json:"default, string, omitempty"`
+			Default bool   `json:"default,string,omitempty"`
 		}
 		State     string `json:"state"`
-		Locked    bool   `json:"locked, string, omitempty"`
+		Locked    bool   `json:"locked,string,omitempty"`
 		Assignee  string `json:"assignee"`
 		Milestone string `json:"milestone"`
-		Comments  int64  `json:"comments, string, omitempty"`
+		Comments  int64  `json:"comments,string,omitempty"`
 		Createdat string `json:"created_at"`
 		Updatedat string `json:"updated_at"`
 		Closedat  string `json:"closed_at"`
 		Body      string `json:"body"`
 	}
 	Repository struct {
-		ID       int64  `json:"id, string, omitempty"`
+		ID       int64  `json:"id,string,omitempty"`
 		Name     string `json:"name"`
 		Fullname string `json:"full_name"`
 		Owner    struct {
 			Login             string `json:"login"`
-			ID                int64  `json:"id, string, omitempty"`
+			ID                int64  `json:"id,string,omitempty"`
 			AvatarURL         string `json:"avatar_url"`
 			GravatarID        string `json:"gravatar_id"`
 			URL               string `json:"url"`
@@ -75,12 +75,12 @@ type IssuesPayload struct {
 			EventsURL         string `json:"events_url"`
 			ReceivedeventsURL string `json:"received_events_url"`
 			Type              string `json:"type"`
-			Siteadmin         bool   `json:"site_admin, string, omitempty"`
+			Siteadmin         bool   `json:"site_admin,string,omitempty"`
 		}
-		Private          bool   `json:"private, string, omitempty"`
+		Private          bool   `json:"private,string,omitempty"`
 		HTMLURL          string `json:"html_url"`
 		Description      string `json:"description"`
-		Fork             bool   `json:"fork, string, omitempty"`
+		Fork             bool   `json:"fork,string,omitempty"`
 		URL              string `json:"url"`
 		ForksURL         string `json:"forks_url"`
 		KeysURL          string `json:"keys_url"`
@@ -125,25 +125,25 @@ type IssuesPayload struct {
 		CloneURL         string `json:"clone_url"`
 		SvnURL           string `json:"svn_url"`
 		Homepage         string `json:"homepage"`
-		Size             int64  `json:"size, string, omitempty"`
-		Stargazerscount  int64  `json:"stargazers_count, string, omitempty"`
-		Watcherscount    int64  `json:"watchers_count, string, omitempty"`
+		Size             int64  `json:"size,string,omitempty"`
+		Stargazerscount  int64  `json:"stargazers_count,string,omitempty"`
+		Watcherscount    int64  `json:"watchers_count,string,omitempty"`
 		Language         string `json:"language"`
-		Hasissues        bool   `json:"has_issues, string, omitempty"`
-		Hasdownloads     bool   `json:"has_downloads, string, omitempty"`
-		Haswiki          bool   `json:"has_wiki, string, omitempty"`
-		Haspages         bool   `json:"has_pages, string, omitempty"`
-		Forkscount       int64  `json:"forks_count, string, omitempty"`
+		Hasissues        bool   `json:"has_issues,string,omitempty"`
+		Hasdownloads     bool   `json:"has_downloads,string,omitempty"`
+		Haswiki          bool   `json:"has_wiki,string,omitempty"`
+		Haspages         bool   `json:"has_pages,string,omitempty"`
+		Forkscount       int64  `json:"forks_count,string,omitempty"`
 		MirrorURL        string `json:"mirror_url"`
-		Openissuescount  int64  `json:"open_issues_count, string, omitempty"`
-		Forks            int64  `json:"forks, string, omitempty"`
-		Openissues       int64  `json:"open_issues, string, omitempty"`
-		Watchers         int64  `json:"watchers, string, omitempty"`
+		Openissuescount  int64  `json:"open_issues_count,string,omitempty"`
+		Forks            int64  `json:"forks,string,omitempty"`
+		Openissues       int64  `json:"open_issues,string,omitempty"`
+		Watchers         int64  `json:"watchers,string,omitempty"`
 		Defaultbranch    string `json:"default_branch"`
 	}
 	Sender struct {
 		Login             string `json:"login"`
-		ID                int64  `json:"id, string, omitempty"`
+		ID                int64  `json:"id,string,omitempty"`
 		AvatarURL         string `json:"avatar_url"`
 		GravatarID        string `json:"gravatar_id"`
 		URL               string `json:"url"`
@@ -158,7 +158,7 @@ type IssuesPayload struct {
 		EventsURL         string `json:"events_url"`
 		ReceivedeventsURL string `json:"received_events_url"`
 		Type              string `json:"type"`
-		Siteadmin         bool   `json:"site_admin, string, omitempty"`
+		Siteadmin         bool   `json:"site_admin,string,omitempty"`
 	}
 }
 
