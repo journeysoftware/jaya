@@ -176,5 +176,3 @@ func Issues(body []byte) string {
 	message := name + " has " + action + " an issue for " + repo + "."
 	return message
 }
-
-// Issues comment notification
