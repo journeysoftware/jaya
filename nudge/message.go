@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// IssuesDevstreamActivityPayload
 type IssuesDevstreamActivityPayload struct {
 	Issue struct {
 		Key string `json:"key"`
@@ -17,7 +18,7 @@ type IssuesDevstreamActivityPayload struct {
 	}
 }
 
-//IssuesDevstreamActivity ...
+// IssuesDevstreamActivity ...
 func IssuesDevstreamActivity(body []byte) string {
 	var m = IssuesDevstreamActivityPayload{}
 	err := json.Unmarshal(body, &m)
