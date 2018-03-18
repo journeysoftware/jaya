@@ -136,7 +136,7 @@ func nudgeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	f := map[string]func(body []byte) string{
-		"IssuesDevstreamActivity": nudge.IssuesDevstreamActivity}
+		"issuesDevstreamActivity": nudge.IssuesDevstreamActivity}
 
 	activityType := r.Header.Get("Activity-Type")
 	message := f[activityType](hc.Body)
